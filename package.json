@@ -1,12 +1,29 @@
 {
   "name": "projeto-drivenpass",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx tsc",
+    "start": "node dist/app.js",
+    "dev":"nodemon src/app.ts"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.19",
+    "@types/node": "^20.8.4",
+    "@types/pg": "^8.10.5",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "pg": "^8.11.3"
+  }
 }
