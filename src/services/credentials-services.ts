@@ -1,19 +1,19 @@
+import { CreateCredential } from "../protocols";
 import { credentialsRepository } from "../repositories/credentials-repository";
 
 
 
-async function createCredential(url, username, password, credIdentifier){
-return credentialsRepository.insertOne({
-    url, username, password, credIdentifier
-})
+async function createCredential(credential: CreateCredential, userId: number){
+
+    return credentialsRepository.insertOne(credential, userId)
 }
 
 
-async function getUserCredentials(userId: any) {
+async function getUserCredentials(userId: number) {
     return credentialsRepository.findAll(userId)
 }
 
-async function deleteCredentialById(credentialId: any) {
+async function deleteCredentialById(credentialId: number) {
     return credentialsRepository.deleteOne(credentialId)
 }
 

@@ -1,23 +1,34 @@
-import express, { Request, Response } from 'express';
+import express, { json, Express } from 'express';
 import dotenv from 'dotenv';
 import router from './routes/index-routes';
+import { handleApplicationErrors } from './middlewares/error-handling-middleware';
+import loadEnv from 'config/envs';
+import { connectDb, disconnectDB } from 'database/database-connection';
+
+
 
 dotenv.config()
+
+loadEnv();
 const app = express()
+app.use(json())
 app.use(express.json())
+app.get('/health', (_req, res) => res.send('OK!'))
+app.use(handleApplicationErrors);
 
 
 app.use(router)
+
+export function init(): Promise<Express> {
+    connectDb();
+    return Promise.resolve(app);
+  }
+  
+  export async function close(): Promise<void> {
+    await disconnectDB();
+  }
+  
 export default app
 
 
 
-/** o que tem que fazer:
- * validar dados de entrada:
- *           na criação do usuario: criar objetos
- *                                  precisa ter o fomrato email e senha 
- *                                  email precisa ser válido e único 
- *                                  senha precisa ter pelo menos 10 caracteres
- *           na criação de credencial: a credencial precisa ter o formato url, nome de usuario, senha e um titulo
- *                                     o titulo deve ser unico
- */
